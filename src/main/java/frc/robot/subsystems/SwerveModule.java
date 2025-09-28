@@ -10,6 +10,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 public class SwerveModule 
@@ -64,13 +65,36 @@ public class SwerveModule
         return driveEncoderInverted * driveEncoder.getPosition();
     }
 
+    public double getDriveVelocity()
+    {
+        return driveEncoder.getVelocity();
+    }
 
+    public double getTurnPosition()
+    {
+        return turnEncoder.getPosition();
+    }
 
+    public double getTurnVelocity()
+    {
+        return turnEncoder.getVelocity();
+    }
 
+    public SwerveModulePosition getPosition()
+    {
+        return new SwerveModulePosition(getDrivePosition(), new Rotation2d(turnEncoder.getPosition() - angularOffset)); 
+    }
 
+   public void resetEncoders()
+   {
+    driveEncoder.setPosition(0);
 
+   }
 
+   public void stopMotors()
+   {
+    driveMotor.stopMotor();
+    turnMotor.stopMotor();
+   }
 
     }
- 
-}
